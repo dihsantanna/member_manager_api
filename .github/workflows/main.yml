@@ -1,0 +1,42 @@
+name: Code Checker
+on: [push]
+
+jobs:
+  ESLint-Checker:
+    name: ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set node version
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.16.0
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Check ESLint
+      run: npm run lint
+
+  Tests-Checker:
+    name: Tests
+    runs-on: ubuntu-latest
+    needs: [ESLint-Checker]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set node version
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.16.0
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Check Tests
+      run: npm test
