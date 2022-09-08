@@ -7,7 +7,7 @@
   "scripts": {
     "start": "ts-node . --transpileOnly --respawn --ignoreWatch node_modules",
     "dev": "nodemon .",
-    "test": "npx vitest",
+    "test": "npx vitest --reporter verbose",
     "coverage": "npx vitest run --coverage",
     "lint": "eslint"
   },
