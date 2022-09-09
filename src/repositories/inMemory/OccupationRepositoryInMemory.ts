@@ -44,4 +44,12 @@ export class OccupationRepositoryInMemory implements IOccupationRepository {
     ));
     return occupationUpdated;
   }
+
+  async delete (id: number): Promise<Occupation | null> {
+    const occupation = await this.findById(id);
+    if (!occupation) return null;
+
+    this.occupations = this.occupations.filter(occupation => occupation.id !== id);
+    return occupation;
+  }
 }

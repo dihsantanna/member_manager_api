@@ -6,4 +6,5 @@ export interface IOccupationRepository {
   findById: (id: number) => Promise<Occupation | null>
   findByName: (name: string) => Promise<Occupation | null>
   update: (id: number, data: OccupationProps) => Promise<Occupation | null>
+  delete: (id: number) => Promise<Occupation | null>
 }
