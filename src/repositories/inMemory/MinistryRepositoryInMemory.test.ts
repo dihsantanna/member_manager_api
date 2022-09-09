@@ -76,4 +76,16 @@ describe('Testando MinistryRepositoryInMemory', () => {
     expect(ministryUpdated?.name).toBe(updatedName);
     expect(ministryUpdated).toBeInstanceOf(Ministry);
   });
+
+  it('Deve ser possível deletar um ministério e retornar um Ministry.', async () => {
+    const ministryRepositoryInMemory = new MinistryRepositoryInMemory();
+    const ministry = new Ministry({ name });
+    const ministryCreated = await ministryRepositoryInMemory.create(ministry);
+    const ministryDeleted = await ministryRepositoryInMemory.delete(
+      ministryCreated.id as number
+    );
+
+    expect(ministryRepositoryInMemory).not.toContainEqual(ministryDeleted);
+    expect(ministryDeleted).toBeInstanceOf(Ministry);
+  });
 });

@@ -44,4 +44,12 @@ export class MinistryRepositoryInMemory implements IMinistryRepository {
     ));
     return ministryUpdated;
   }
+
+  async delete (id: number): Promise<Ministry | null> {
+    const ministry = await this.findById(id);
+    if (!ministry) return null;
+
+    this.ministries = this.ministries.filter(ministry => ministry.id !== id);
+    return ministry;
+  }
 }
