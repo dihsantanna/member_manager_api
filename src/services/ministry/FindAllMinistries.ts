@@ -1,14 +1,14 @@
 import { Container, InjectionToken } from '@decorators/di';
 import { IMinistryRepository, MinistryWithMembersQty } from '../../repositories';
 
-type FindAllMinistryResponse = MinistryWithMembersQty[];
+type FindAllMinistriesResponse = MinistryWithMembersQty[];
 
 export class FindAllMinistries {
   constructor (
     private ministryRepository: IMinistryRepository
   ) { }
 
-  async execute (): Promise<FindAllMinistryResponse> {
+  async execute (): Promise<FindAllMinistriesResponse> {
     return await this.ministryRepository.findAll();
   }
 }
