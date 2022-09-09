@@ -1,4 +1,4 @@
-import { IMinistryRepository } from '..';
+import { IMinistryRepository, MinistryWithMembersQty } from '..';
 import { Ministry } from '../../entities';
 
 export class MinistryRepositoryInMemory implements IMinistryRepository {
@@ -15,6 +15,12 @@ export class MinistryRepositoryInMemory implements IMinistryRepository {
 
     this.ministries.push(ministry);
     return ministry;
+  }
+
+  async findAll (): Promise<MinistryWithMembersQty[]> {
+    return this.ministries.map(({ id, name }) => (
+      new MinistryWithMembersQty({ id, name }, 0)
+    ));
   }
 
   async findById (id: number): Promise<Ministry | null> {

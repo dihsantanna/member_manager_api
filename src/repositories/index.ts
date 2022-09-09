@@ -1,5 +1,6 @@
-import { IMinistryRepository } from './MinistryRepository';
+import { IMinistryRepository, MinistryWithMembersQty } from './MinistryRepository';
 
 export {
-  IMinistryRepository
+  IMinistryRepository,
+  MinistryWithMembersQty
 };

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { MinistryWithMembersQty } from '..';
 
 import { Ministry } from '../../entities';
 import { ministryProps } from '../../tests/utils';
@@ -49,5 +50,15 @@ describe('Testando MinistryRepositoryInMemory', () => {
 
     expect(ministryFound).toBe(createMinistry);
     expect(ministryFound).toBeInstanceOf(Ministry);
+  });
+
+  it('Deve ser possível encontrar todos os ministérios e retornar um array de MinistryWithMembersQty.', async () => {
+    const ministryRepositoryInMemory = new MinistryRepositoryInMemory();
+    const ministry = new Ministry({ name });
+    await ministryRepositoryInMemory.create(ministry);
+    const ministries = await ministryRepositoryInMemory.findAll();
+
+    expect(ministries.length).toBe(ministryRepositoryInMemory.ministries.length);
+    expect(ministries[0]).toBeInstanceOf(MinistryWithMembersQty);
   });
 });
