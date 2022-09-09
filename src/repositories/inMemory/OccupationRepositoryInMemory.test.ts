@@ -39,7 +39,7 @@ describe('Testando OccupationRepositoryInMemory', () => {
     expect(occupationFound).toBeInstanceOf(Occupation);
   });
 
-  it('Deve ser possível encontrar um ministério pelo "name" e retornar um Occupation.', async () => {
+  it('Deve ser possível encontrar um cargo pelo "name" e retornar um Occupation.', async () => {
     const occupationRepositoryInMemory = new OccupationRepositoryInMemory();
     const occupation = new Occupation({ name });
     const createOccupation = await occupationRepositoryInMemory.create(occupation);
@@ -51,7 +51,7 @@ describe('Testando OccupationRepositoryInMemory', () => {
     expect(occupationFound).toBeInstanceOf(Occupation);
   });
 
-  it('Deve ser possível encontrar todos os ministérios e retornar um array de Occupation.', async () => {
+  it('Deve ser possível encontrar todos os cargos e retornar um array de Occupation.', async () => {
     const occupationRepositoryInMemory = new OccupationRepositoryInMemory();
     const occupation = new Occupation({ name });
     await occupationRepositoryInMemory.create(occupation);
