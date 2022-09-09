@@ -1,5 +1,5 @@
 import { IOccupationRepository } from '..';
-import { Occupation } from '../../entities';
+import { Occupation, OccupationProps } from '../../entities';
 
 export class OccupationRepositoryInMemory implements IOccupationRepository {
   occupations: Occupation[] = [];
@@ -31,5 +31,17 @@ export class OccupationRepositoryInMemory implements IOccupationRepository {
   async findByName (name: string): Promise<Occupation | null> {
     const occupation = this.occupations.find(occupation => occupation.name === name);
     return occupation || null;
+  }
+
+  async update (id: number, { name }: OccupationProps): Promise<Occupation | null> {
+    const occupation = await this.findById(id);
+    if (!occupation) return null;
+
+    const occupationUpdated = new Occupation({ id, name });
+
+    this.occupations = this.occupations.map(occupation => (
+      occupation.id === id ? occupationUpdated : occupation
+    ));
+    return occupationUpdated;
   }
 }
