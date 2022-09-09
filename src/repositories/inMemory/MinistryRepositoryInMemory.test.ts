@@ -7,6 +7,8 @@ import { MinistryRepositoryInMemory } from './MinistryRepositoryInMemory';
 
 const { name } = ministryProps;
 
+const updatedName = `${name} Unitários`;
+
 describe('Testando MinistryRepositoryInMemory', () => {
   it('Deve ser possível criar uma instância.', () => {
     const ministryRepositoryInMemory = new MinistryRepositoryInMemory();
@@ -60,5 +62,18 @@ describe('Testando MinistryRepositoryInMemory', () => {
 
     expect(ministries.length).toBe(ministryRepositoryInMemory.ministries.length);
     expect(ministries[0]).toBeInstanceOf(MinistryWithMembersQty);
+  });
+
+  it('Deve ser possível atualizar um ministério e retornar um Ministry.', async () => {
+    const ministryRepositoryInMemory = new MinistryRepositoryInMemory();
+    const ministry = new Ministry({ name });
+    const createMinistry = await ministryRepositoryInMemory.create(ministry);
+    const ministryUpdated = await ministryRepositoryInMemory.update(
+      createMinistry.id as number,
+      { name: updatedName }
+    );
+
+    expect(ministryUpdated?.name).toBe(updatedName);
+    expect(ministryUpdated).toBeInstanceOf(Ministry);
   });
 });

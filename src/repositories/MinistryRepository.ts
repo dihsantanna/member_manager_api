@@ -11,4 +11,5 @@ export interface IMinistryRepository {
   findAll: () => Promise<MinistryWithMembersQty[]>
   findById: (id: number) => Promise<Ministry | null>
   findByName: (name: string) => Promise<Ministry | null>
+  update: (id: number, data: MinistryProps) => Promise<Ministry | null>
 }

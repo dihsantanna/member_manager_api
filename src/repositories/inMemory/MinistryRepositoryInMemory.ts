@@ -1,5 +1,5 @@
 import { IMinistryRepository, MinistryWithMembersQty } from '..';
-import { Ministry } from '../../entities';
+import { Ministry, MinistryProps } from '../../entities';
 
 export class MinistryRepositoryInMemory implements IMinistryRepository {
   ministries: Ministry[] = [];
@@ -31,5 +31,17 @@ export class MinistryRepositoryInMemory implements IMinistryRepository {
   async findByName (name: string): Promise<Ministry | null> {
     const ministry = this.ministries.find(ministry => ministry.name === name);
     return ministry || null;
+  }
+
+  async update (id: number, { name }: MinistryProps): Promise<Ministry | null> {
+    const ministry = await this.findById(id);
+    if (!ministry) return null;
+
+    const ministryUpdated = new Ministry({ id, name });
+
+    this.ministries = this.ministries.map(ministry => (
+      ministry.id === id ? ministryUpdated : ministry
+    ));
+    return ministryUpdated;
   }
 }
