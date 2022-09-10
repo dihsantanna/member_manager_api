@@ -1,4 +1,4 @@
-import { StatusCodes as status } from 'http-status-codes/build/cjs/status-codes';
+import { StatusCodes as status } from 'http-status-codes';
 import { describe, expect, it } from 'vitest';
 
 import { Ministry } from '../../entities';

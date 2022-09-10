@@ -40,6 +40,7 @@ describe('Testando classe Member.', () => {
   it(`Deve ser possível acessar os atributos ${Object.keys(memberProps).join(', ')}.`, () => {
     const member = new Member(memberProps);
 
+    expect(member.allProps).toBe(memberProps);
     expect(member.id).toBe(id);
     expect(member.fullName).toBe(fullName);
     expect(member.birthDate).toBe(birthDate);

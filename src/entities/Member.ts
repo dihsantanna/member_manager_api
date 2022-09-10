@@ -30,12 +30,16 @@ export interface MemberProps extends Person {
   state: State | null
   profession: string | null
   congregated: boolean
-  occupations?: Occupation[]
-  ministries?: Ministry[]
+  occupations?: Occupation[] | number[]
+  ministries?: Ministry[] | number[]
 }
 
 export class Member {
   constructor (private props: MemberProps) { }
+
+  get allProps () {
+    return this.props;
+  }
 
   get id () {
     return this.props.id;
