@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Member } from '../../entities';
+import { Member, Ministry } from '../../entities';
 import { createMemberProps } from '../../tests/utils';
 import { MemberRepositoryInMemory } from './MemberRepositoryInMemory';
 
@@ -39,11 +39,11 @@ describe('Testando MemberRepositoryInMemory', () => {
     const memberRepositoryInMemory = new MemberRepositoryInMemory();
     const member = new Member(createMemberProps);
 
-    await memberRepositoryInMemory.create(member);
-    const memberFound = await memberRepositoryInMemory.findById(1);
+    const memberCreated = await memberRepositoryInMemory.create(member);
+    const memberFound = await memberRepositoryInMemory.findById(memberCreated.id as number);
 
     expect(memberFound).toBeInstanceOf(Member);
-    expect(memberFound?.id).toBe(1);
+    expect(memberFound?.id).toBe(memberCreated.id);
   });
 
   it('Deve ser possível encontrar todos os membros.', async () => {
@@ -55,5 +55,24 @@ describe('Testando MemberRepositoryInMemory', () => {
 
     expect(membersFound).toBeInstanceOf(Array);
     expect(membersFound[0]).toBeInstanceOf(Member);
+  });
+
+  it('Deve ser possível encontrar os ministérios de um membro, deve retornar um array de Ministry.', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+    const member = new Member(createMemberProps);
+
+    const memberCreated = await memberRepositoryInMemory.create(member);
+    const ministries = await memberRepositoryInMemory.findMemberMinistry(memberCreated.id as number);
+
+    expect(ministries).toBeInstanceOf(Array);
+    expect((ministries as Ministry[])[0]).toBeInstanceOf(Ministry);
+  });
+
+  it('Deve retornar nulo caso id de membro não exista', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+
+    const ministries = await memberRepositoryInMemory.findMemberMinistry(1);
+
+    expect(ministries).toBeNull();
   });
 });

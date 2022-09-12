@@ -131,4 +131,20 @@ export class MemberRepositoryInMemory implements IMemberRepository {
       })
     ));
   }
+
+  async findMemberMinistry (id: number): Promise<Ministry[] | null> {
+    const member = await this.findById(id);
+
+    if (!member) {
+      return null;
+    }
+
+    return this.memberMinistry
+      .filter(({ memberId }) => (memberId === id))
+      .map(({ ministryId }) => (new Ministry({
+        id: ministryId,
+        name: this.ministries
+          .find(ministry => (ministry.id === ministryId))?.name as string
+      })));
+  }
 }
