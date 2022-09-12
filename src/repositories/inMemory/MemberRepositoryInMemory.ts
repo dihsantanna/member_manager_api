@@ -94,6 +94,26 @@ export class MemberRepositoryInMemory implements IMemberRepository {
     return member || null;
   }
 
+  async findById (id: number): Promise<Member | null> {
+    const member = this.members.find(member => member.id === id);
+    if (!member) {
+      return null;
+    }
+    return new Member({
+      ...member.allProps,
+      ministries: this.memberMinistry.filter(({ memberId }) => (memberId === member.id as number))
+        .map(({ ministryId }) => (new Ministry({
+          id: ministryId,
+          name: this.ministries.find(ministry => (ministry.id === ministryId))?.name as string
+        }))),
+      occupations: this.memberOccupation.filter(({ memberId }) => (memberId === member.id as number))
+        .map(({ occupationId }) => (new Occupation({
+          id: occupationId,
+          name: this.occupations.find(occupation => (occupation.id === occupationId))?.name as string
+        })))
+    });
+  }
+
   async findAll (): Promise<Member[]> {
     return this.members.map(member => (
       new Member({

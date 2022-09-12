@@ -28,9 +28,6 @@ describe('Testando MemberRepositoryInMemory', () => {
   it('Deve ser possível encontrar um membro pelo e-mail.', async () => {
     const memberRepositoryInMemory = new MemberRepositoryInMemory();
     const member = new Member(createMemberProps);
-    const members = memberRepositoryInMemory.members;
-
-    expect(members).toHaveLength(0);
 
     await memberRepositoryInMemory.create(member);
     const memberFound = await memberRepositoryInMemory.findByEmail(member.email as string);
@@ -38,12 +35,20 @@ describe('Testando MemberRepositoryInMemory', () => {
     expect(memberFound).toBeInstanceOf(Member);
   });
 
+  it('Deve ser possível encontrar um membro pelo id.', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+    const member = new Member(createMemberProps);
+
+    await memberRepositoryInMemory.create(member);
+    const memberFound = await memberRepositoryInMemory.findById(1);
+
+    expect(memberFound).toBeInstanceOf(Member);
+    expect(memberFound?.id).toBe(1);
+  });
+
   it('Deve ser possível encontrar todos os membros.', async () => {
     const memberRepositoryInMemory = new MemberRepositoryInMemory();
     const member = new Member(createMemberProps);
-    const members = memberRepositoryInMemory.members;
-
-    expect(members).toHaveLength(0);
 
     await memberRepositoryInMemory.create(member);
     const membersFound = await memberRepositoryInMemory.findAll();

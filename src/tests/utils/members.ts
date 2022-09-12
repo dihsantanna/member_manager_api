@@ -30,7 +30,6 @@ export const memberProps = {
 };
 
 export const createMemberProps = {
-  id: 1,
   fullName: 'John Doe',
   birthDate: '2000-01-01',
   nationality: 'brasileiro(a)',
