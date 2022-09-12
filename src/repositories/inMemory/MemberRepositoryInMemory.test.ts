@@ -24,4 +24,31 @@ describe('Testando MemberRepositoryInMemory', () => {
     expect(members).toHaveLength(memberInitialQty + 1);
     expect(createMember).toBeInstanceOf(Member);
   });
+
+  it('Deve ser possível encontrar um membro pelo e-mail.', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+    const member = new Member(createMemberProps);
+    const members = memberRepositoryInMemory.members;
+
+    expect(members).toHaveLength(0);
+
+    await memberRepositoryInMemory.create(member);
+    const memberFound = await memberRepositoryInMemory.findByEmail(member.email as string);
+
+    expect(memberFound).toBeInstanceOf(Member);
+  });
+
+  it('Deve ser possível encontrar todos os membros.', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+    const member = new Member(createMemberProps);
+    const members = memberRepositoryInMemory.members;
+
+    expect(members).toHaveLength(0);
+
+    await memberRepositoryInMemory.create(member);
+    const membersFound = await memberRepositoryInMemory.findAll();
+
+    expect(membersFound).toBeInstanceOf(Array);
+    expect(membersFound[0]).toBeInstanceOf(Member);
+  });
 });

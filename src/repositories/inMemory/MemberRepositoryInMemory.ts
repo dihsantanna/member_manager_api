@@ -93,4 +93,22 @@ export class MemberRepositoryInMemory implements IMemberRepository {
     const member = this.members.find(member => member.email === email);
     return member || null;
   }
+
+  async findAll (): Promise<Member[]> {
+    return this.members.map(member => (
+      new Member({
+        ...member.allProps,
+        ministries: this.memberMinistry.filter(({ memberId }) => (memberId === member.id as number))
+          .map(({ ministryId }) => (new Ministry({
+            id: ministryId,
+            name: this.ministries.find(ministry => (ministry.id === ministryId))?.name as string
+          }))),
+        occupations: this.memberOccupation.filter(({ memberId }) => (memberId === member.id as number))
+          .map(({ occupationId }) => (new Occupation({
+            id: occupationId,
+            name: this.occupations.find(occupation => (occupation.id === occupationId))?.name as string
+          })))
+      })
+    ));
+  }
 }
