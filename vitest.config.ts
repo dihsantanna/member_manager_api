@@ -1,5 +1,10 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  test: {}
+  test: {
+    coverage: {
+      provider: 'c8',
+      exclude: ['**/node_modules/**', '**/dist/**', '**/src/**/index.ts'],
+    }
+  }
 })
