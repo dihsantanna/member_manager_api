@@ -1,8 +1,9 @@
-import { Container, InjectionToken } from '@decorators/di';
+import { Container, Injectable, InjectionToken } from '@decorators/di';
 import { IMinistryRepository, MinistryWithMembersQty } from '../../repositories';
 
 type FindAllMinistriesResponse = MinistryWithMembersQty[];
 
+@Injectable()
 export class FindAllMinistries {
   constructor (
     private ministryRepository: IMinistryRepository

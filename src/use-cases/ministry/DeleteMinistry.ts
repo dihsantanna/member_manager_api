@@ -1,4 +1,4 @@
-import { Container, InjectionToken } from '@decorators/di';
+import { Container, Injectable, InjectionToken } from '@decorators/di';
 import { StatusCodes as status } from 'http-status-codes';
 import { Ministry } from '../../entities';
 import { CustomError } from '../../helpers';
@@ -10,6 +10,7 @@ interface DeleteMinistryRequest {
 
 type DeleteMinistryResponse = Ministry;
 
+@Injectable()
 export class DeleteMinistry {
   constructor (
     private ministryRepository: IMinistryRepository

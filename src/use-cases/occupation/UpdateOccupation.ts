@@ -1,4 +1,4 @@
-import { Container, InjectionToken } from '@decorators/di';
+import { Container, Injectable, InjectionToken } from '@decorators/di';
 import { StatusCodes as status } from 'http-status-codes';
 
 import { Occupation, OccupationProps } from '../../entities';
@@ -10,6 +10,7 @@ interface UpdateOccupationRequest {
   data: OccupationProps
 }
 
+@Injectable()
 export class UpdateOccupation {
   constructor (
     private occupationRepository: IOccupationRepository

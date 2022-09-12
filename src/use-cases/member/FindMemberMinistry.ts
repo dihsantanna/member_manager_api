@@ -1,3 +1,4 @@
+import { Container, Injectable, InjectionToken } from '@decorators/di';
 import { StatusCodes } from 'http-status-codes';
 
 import { Ministry } from '../../entities';
@@ -8,6 +9,7 @@ type FindMemberMinistryRequest = number;
 
 type FindMemberMinistryResponse = Ministry[];
 
+@Injectable()
 export class FindMemberMinistry {
   constructor (
     private memberRepository: IMemberRepository
@@ -25,3 +27,10 @@ export class FindMemberMinistry {
     return ministries;
   }
 }
+
+export const FIND_MEMBER_MINISTRY = new InjectionToken('FIND_MEMBER_MINISTRY');
+
+Container.provide([{
+  provide: FIND_MEMBER_MINISTRY,
+  useClass: FindMemberMinistry
+}]);

@@ -1,4 +1,4 @@
-import { Container, InjectionToken } from '@decorators/di';
+import { Container, Injectable, InjectionToken } from '@decorators/di';
 import { StatusCodes as status } from 'http-status-codes';
 
 import { Ministry, MinistryProps } from '../../entities';
@@ -10,6 +10,7 @@ interface UpdateMinistryRequest {
   data: MinistryProps
 }
 
+@Injectable()
 export class UpdateMinistry {
   constructor (
     private ministryRepository: IMinistryRepository

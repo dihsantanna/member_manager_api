@@ -1,9 +1,10 @@
-import { Container, InjectionToken } from '@decorators/di';
+import { Container, Injectable, InjectionToken } from '@decorators/di';
 import { Occupation } from '../../entities';
 import { IOccupationRepository } from '../../repositories';
 
 type FindAllOccupationsResponse = Occupation[];
 
+@Injectable()
 export class FindAllOccupations {
   constructor (
     private occupationRepository: IOccupationRepository

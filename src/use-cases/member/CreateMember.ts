@@ -1,3 +1,4 @@
+import { Container, Injectable, InjectionToken } from '@decorators/di';
 import { StatusCodes as status } from 'http-status-codes';
 
 import { Member, MemberProps } from '../../entities';
@@ -8,6 +9,7 @@ interface CreateMemberRequest extends MemberProps {}
 
 type CreateMemberResponse = Member;
 
+@Injectable()
 export class CreateMember {
   constructor (
     private memberRepository: IMemberRepository
@@ -28,3 +30,10 @@ export class CreateMember {
     return memberCreated;
   }
 }
+
+export const CREATE_MEMBER = new InjectionToken('CREATE_MEMBER');
+
+Container.provide([{
+  provide: CREATE_MEMBER,
+  useClass: CreateMember
+}]);

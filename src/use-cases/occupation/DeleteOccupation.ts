@@ -1,4 +1,4 @@
-import { Container, InjectionToken } from '@decorators/di';
+import { Container, Injectable, InjectionToken } from '@decorators/di';
 import { StatusCodes as status } from 'http-status-codes';
 import { Occupation } from '../../entities';
 import { CustomError } from '../../helpers';
@@ -10,6 +10,7 @@ interface DeleteOccupationRequest {
 
 type DeleteOccupationResponse = Occupation;
 
+@Injectable()
 export class DeleteOccupation {
   constructor (
     private occupationRepository: IOccupationRepository
