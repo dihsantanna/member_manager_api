@@ -154,4 +154,10 @@ export class MemberRepositoryInMemory implements IMemberRepository {
 
     return Promise.resolve(this.members.find(member => member.id === id) as Member);
   }
+
+  async delete (id: number): Promise<Member> {
+    const member = this.members.find(member => member.id === id) as Member;
+    this.members = this.members.filter(member => member.id !== id);
+    return member;
+  }
 }

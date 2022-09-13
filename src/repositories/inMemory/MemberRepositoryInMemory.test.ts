@@ -90,4 +90,19 @@ describe('Testando MemberRepositoryInMemory', () => {
     expect(memberCreated.city).toBe('Cidade dos Tests');
     expect(memberUpdated.city).toBe('Cidade dos Testes');
   });
+
+  it('Deve ser possível deletar um membro.', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+    const member = new Member(createMemberProps);
+
+    const memberCreated = await memberRepositoryInMemory.create(member);
+
+    expect(memberRepositoryInMemory.members).toHaveLength(1);
+
+    const memberDeleted = await memberRepositoryInMemory.delete(memberCreated.id as number);
+
+    expect(memberDeleted).toBeInstanceOf(Member);
+    expect(memberCreated.id).toBe(memberDeleted.id);
+    expect(memberRepositoryInMemory.members).toHaveLength(0);
+  });
 });

@@ -8,4 +8,5 @@ export interface IMemberRepository {
   findAll: () => Promise<Member[]>
   findMemberMinistry: (id: number) => Promise<Ministry[] | null>
   update: (id: number, data: UpdateData) => Promise<Member>
+  delete: (id: number) => Promise<Member>
 }
