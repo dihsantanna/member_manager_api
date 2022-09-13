@@ -3,7 +3,7 @@ export interface MinistryProps {
   name: string
 }
 
-export class Ministry {
+export class Ministry implements MinistryProps {
   readonly id?: number;
   readonly name: string;
 

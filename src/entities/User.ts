@@ -8,7 +8,7 @@ export interface UserProps extends Person {
   scope?: string[]
 }
 
-export class User {
+export class User implements UserProps {
   readonly id?: number;
   readonly fullName: string;
   readonly email: string;

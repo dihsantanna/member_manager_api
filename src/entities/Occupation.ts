@@ -3,7 +3,7 @@ export interface OccupationProps {
   name: string
 }
 
-export class Occupation {
+export class Occupation implements OccupationProps {
   readonly id?: number;
   readonly name: string;
 
