@@ -75,4 +75,19 @@ describe('Testando MemberRepositoryInMemory', () => {
 
     expect(ministries).toBeNull();
   });
+
+  it('Deve ser possível atualizar um membro.', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+    const member = new Member(createMemberProps);
+
+    const memberCreated = await memberRepositoryInMemory.create(member);
+    const memberUpdated = await memberRepositoryInMemory.update(memberCreated.id as number, {
+      city: 'Cidade dos Testes'
+    });
+
+    expect(memberUpdated).toBeInstanceOf(Member);
+    expect(memberCreated.id).toBe(memberUpdated.id);
+    expect(memberCreated.city).toBe('Cidade dos Tests');
+    expect(memberUpdated.city).toBe('Cidade dos Testes');
+  });
 });

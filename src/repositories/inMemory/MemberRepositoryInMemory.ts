@@ -1,5 +1,6 @@
 import { IMemberRepository } from '..';
 import { Member, Ministry, Occupation } from '../../entities';
+import { UpdateData } from '../../use-cases/member';
 
 const MINISTRIES = {
   1: new Ministry({ id: 1, name: 'Ministério 1' }),
@@ -40,11 +41,9 @@ export class MemberRepositoryInMemory implements IMemberRepository {
 
   async create (data: Member): Promise<Member> {
     const member = {
-      ...data.allProps,
+      ...data,
       id: this.nextId
     };
-    delete member.occupations;
-    delete member.ministries;
 
     const { ministries, occupations } = data;
 
@@ -73,7 +72,7 @@ export class MemberRepositoryInMemory implements IMemberRepository {
     this.nextId += 1;
 
     const memberReturn = new Member({
-      ...newMember.allProps,
+      ...newMember,
       ministries: ministries?.map(id => (new Ministry({
         id: id as number,
         name: this.ministries
@@ -100,7 +99,7 @@ export class MemberRepositoryInMemory implements IMemberRepository {
       return null;
     }
     return new Member({
-      ...member.allProps,
+      ...member,
       ministries: this.memberMinistry.filter(({ memberId }) => (memberId === member.id as number))
         .map(({ ministryId }) => (new Ministry({
           id: ministryId,
@@ -117,7 +116,7 @@ export class MemberRepositoryInMemory implements IMemberRepository {
   async findAll (): Promise<Member[]> {
     return this.members.map(member => (
       new Member({
-        ...member.allProps,
+        ...member,
         ministries: this.memberMinistry.filter(({ memberId }) => (memberId === member.id as number))
           .map(({ ministryId }) => (new Ministry({
             id: ministryId,
@@ -146,5 +145,13 @@ export class MemberRepositoryInMemory implements IMemberRepository {
         name: this.ministries
           .find(ministry => (ministry.id === ministryId))?.name as string
       })));
+  }
+
+  async update (id: number, data: UpdateData): Promise<Member> {
+    this.members = this.members.map(member => (
+      member.id === id ? new Member({ ...member, ...data }) : member
+    ));
+
+    return Promise.resolve(this.members.find(member => member.id === id) as Member);
   }
 }

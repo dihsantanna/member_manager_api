@@ -2,6 +2,7 @@ import { CreateMember, CREATE_MEMBER } from './CreateMember';
 import { FindAllMembers, FIND_ALL_MEMBERS } from './FindAllMembers';
 import { FindByMemberId, FIND_BY_MEMBER_ID } from './FindByMemberId';
 import { FindMemberMinistry, FIND_MEMBER_MINISTRY } from './FindMemberMinistry';
+import { UpdateData, UpdateMember, UPDATE_MEMBER } from './UpdateMember';
 
 export {
   CreateMember,
@@ -11,5 +12,8 @@ export {
   FindByMemberId,
   FIND_BY_MEMBER_ID,
   FindMemberMinistry,
-  FIND_MEMBER_MINISTRY
+  FIND_MEMBER_MINISTRY,
+  UpdateMember,
+  UpdateData,
+  UPDATE_MEMBER
 };
