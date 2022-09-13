@@ -9,29 +9,19 @@ export interface UserProps extends Person {
 }
 
 export class User {
-  constructor (private props: UserProps) { }
+  readonly id?: number;
+  readonly fullName: string;
+  readonly email: string;
+  readonly password: string;
+  readonly roleName: string;
+  readonly scope?: string[];
 
-  get id () {
-    return this.props.id;
-  }
-
-  get fullName () {
-    return this.props.fullName;
-  }
-
-  get email () {
-    return this.props.email;
-  }
-
-  get password () {
-    return this.props.password;
-  }
-
-  get roleName () {
-    return this.props.roleName;
-  }
-
-  get scope () {
-    return this.props.scope;
+  constructor (props: UserProps) {
+    if (props.id) this.id = props.id;
+    this.fullName = props.fullName;
+    this.email = props.email;
+    this.password = props.password;
+    this.roleName = props.roleName;
+    if (props.scope) this.scope = props.scope;
   }
 }

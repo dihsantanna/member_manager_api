@@ -34,106 +34,56 @@ export interface MemberProps extends Person {
   ministries?: Ministry[] | number[]
 }
 
-export class Member {
-  constructor (private props: MemberProps) { }
+export class Member implements MemberProps {
+  readonly id?: number;
+  readonly fullName: string;
+  readonly birthDate: string;
+  readonly nationality: string;
+  readonly fatherName: string;
+  readonly motherName: string;
+  readonly civilStatus: string;
+  readonly rg: string | null;
+  readonly rgEmissionDate: string | null;
+  readonly rgDispatcher: string | null;
+  readonly cpf: string | null;
+  readonly email: string | null;
+  readonly phone: string | null;
+  readonly mobilePhone: string | null;
+  readonly street: string;
+  readonly number: number | null;
+  readonly complement: string | null;
+  readonly district: string;
+  readonly city: string;
+  readonly state: State | null;
+  readonly profession: string | null;
+  readonly congregated: boolean;
+  readonly occupations?: Occupation[] | number[];
+  readonly ministries?: Ministry[] | number[];
 
-  get allProps () {
-    return this.props;
-  }
-
-  get id () {
-    return this.props.id;
-  }
-
-  get fullName () {
-    return this.props.fullName;
-  }
-
-  get birthDate () {
-    return this.props.birthDate;
-  }
-
-  get nationality () {
-    return this.props.nationality;
-  }
-
-  get fatherName () {
-    return this.props.fatherName;
-  }
-
-  get motherName () {
-    return this.props.motherName;
-  }
-
-  get civilStatus () {
-    return this.props.civilStatus;
-  }
-
-  get rg () {
-    return this.props.rg;
-  }
-
-  get rgEmissionDate () {
-    return this.props.rgEmissionDate;
-  }
-
-  get rgDispatcher () {
-    return this.props.rgDispatcher;
-  }
-
-  get cpf () {
-    return this.props.cpf;
-  }
-
-  get email () {
-    return this.props.email;
-  }
-
-  get phone () {
-    return this.props.phone;
-  }
-
-  get mobilePhone () {
-    return this.props.mobilePhone;
-  }
-
-  get street () {
-    return this.props.street;
-  }
-
-  get number () {
-    return this.props.number;
-  }
-
-  get complement () {
-    return this.props.complement;
-  }
-
-  get district () {
-    return this.props.district;
-  }
-
-  get city () {
-    return this.props.city;
-  }
-
-  get state () {
-    return this.props.state;
-  }
-
-  get profession () {
-    return this.props.profession;
-  }
-
-  get congregated () {
-    return this.props.congregated;
-  }
-
-  get occupations () {
-    return this.props.occupations;
-  }
-
-  get ministries () {
-    return this.props.ministries;
+  constructor (props: MemberProps) {
+    if (props.id) this.id = props.id;
+    this.fullName = props.fullName;
+    this.birthDate = props.birthDate;
+    this.nationality = props.nationality;
+    this.fatherName = props.fatherName;
+    this.motherName = props.motherName;
+    this.civilStatus = props.civilStatus;
+    this.rg = props.rg;
+    this.rgEmissionDate = props.rgEmissionDate;
+    this.rgDispatcher = props.rgDispatcher;
+    this.cpf = props.cpf;
+    this.email = props.email;
+    this.phone = props.phone;
+    this.mobilePhone = props.mobilePhone;
+    this.street = props.street;
+    this.number = props.number;
+    this.complement = props.complement;
+    this.district = props.district;
+    this.city = props.city;
+    this.state = props.state;
+    this.profession = props.profession;
+    this.congregated = props.congregated;
+    if (props.occupations) this.occupations = props.occupations;
+    if (props.ministries) this.ministries = props.ministries;
   }
 }

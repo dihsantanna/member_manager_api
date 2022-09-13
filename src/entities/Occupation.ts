@@ -4,13 +4,11 @@ export interface OccupationProps {
 }
 
 export class Occupation {
-  constructor (private props: OccupationProps) { }
+  readonly id?: number;
+  readonly name: string;
 
-  get id () {
-    return this.props.id;
-  }
-
-  get name () {
-    return this.props.name;
+  constructor (props: OccupationProps) {
+    if (props.id) this.id = props.id;
+    this.name = props.name;
   }
 }

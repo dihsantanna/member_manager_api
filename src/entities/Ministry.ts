@@ -4,13 +4,11 @@ export interface MinistryProps {
 }
 
 export class Ministry {
-  constructor (private props: MinistryProps) { }
+  readonly id?: number;
+  readonly name: string;
 
-  get id () {
-    return this.props.id;
-  }
-
-  get name () {
-    return this.props.name;
+  constructor (props: MinistryProps) {
+    if (props.id) this.id = props.id;
+    this.name = props.name;
   }
 }
