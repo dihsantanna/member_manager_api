@@ -72,4 +72,28 @@ describe('Testando classe UserRepositoryInMemory', () => {
       expect(userFound).toBeNull();
     });
   });
+
+  describe('Método FindAll', () => {
+    it('Deve ser possível retornar uma lista de usuários, e NÃO deve possuir a chave "password"', async () => {
+      const userRepository = new UserRepositoryInMemory();
+      const user = new User(createUserProps);
+
+      await userRepository.create(user);
+      const users = await userRepository.findAll();
+
+      expect(users).toHaveLength(1);
+      expect(users[0]).toBeInstanceOf(User);
+      expect(users[0]).to.have.keys(
+        ['id', 'fullName', 'email', 'roleName']
+      );
+      expect(users[0]).not.toHaveProperty('password');
+    });
+
+    it('Deve retornar uma lista vazia caso não encontre nenhum usuário', async () => {
+      const userRepository = new UserRepositoryInMemory();
+      const users = await userRepository.findAll();
+
+      expect(users).toHaveLength(0);
+    });
+  });
 });

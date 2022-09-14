@@ -50,4 +50,15 @@ export class UserRepositoryInMemory implements IUserRepository {
 
     return new User({ id, fullName, email, roleName });
   }
+
+  async findAll (): Promise<User[]> {
+    return this.users.map(({ id, email, roleName }) => (
+      new User({
+        id,
+        fullName: this.members.find(member => member.email === email)?.fullName,
+        email,
+        roleName
+      })
+    ));
+  }
 }
