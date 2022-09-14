@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Member, Ministry } from '../../entities';
+import { Member, Ministry, Occupation } from '../../entities';
 import { createMemberProps } from '../../tests/utils';
 import { MemberRepositoryInMemory } from './MemberRepositoryInMemory';
 
@@ -74,6 +74,25 @@ describe('Testando MemberRepositoryInMemory', () => {
     const ministries = await memberRepositoryInMemory.findMemberMinistry(1);
 
     expect(ministries).toBeNull();
+  });
+
+  it('Deve ser possível encontrar os cargos de um membro, deve retornar um array de Occupation.', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+    const member = new Member(createMemberProps);
+
+    const memberCreated = await memberRepositoryInMemory.create(member);
+    const occupations = await memberRepositoryInMemory.findMemberOccupation(memberCreated.id as number);
+
+    expect(occupations).toBeInstanceOf(Array);
+    expect((occupations as Occupation[])[0]).toBeInstanceOf(Occupation);
+  });
+
+  it('Deve retornar nulo caso id de membro não exista', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+
+    const occupations = await memberRepositoryInMemory.findMemberOccupation(1);
+
+    expect(occupations).toBeNull();
   });
 
   it('Deve ser possível atualizar um membro.', async () => {

@@ -1,24 +1,24 @@
 import { Container, Injectable, InjectionToken } from '@decorators/di';
 import { StatusCodes } from 'http-status-codes';
 
-import { Ministry } from '../../entities';
+import { Occupation } from '../../entities';
 import { CustomError } from '../../helpers';
 import { IMemberRepository } from '../../repositories';
 
-type FindMemberMinistryRequest = number;
+type FindMemberOccupationRequest = number;
 
-type FindMemberMinistryResponse = Ministry[];
+type FindMemberOccupationResponse = Occupation[];
 
 @Injectable()
-export class FindMemberMinistry {
+export class FindMemberOccupation {
   constructor (
     private memberRepository: IMemberRepository
   ) { }
 
   async execute (
-    id: FindMemberMinistryRequest
-  ): Promise<FindMemberMinistryResponse> {
-    const ministries = await this.memberRepository.findMemberMinistry(id);
+    id: FindMemberOccupationRequest
+  ): Promise<FindMemberOccupationResponse> {
+    const ministries = await this.memberRepository.findMemberOccupation(id);
 
     if (!ministries) {
       throw new CustomError('Membro não existe.', StatusCodes.BAD_REQUEST);
@@ -28,9 +28,9 @@ export class FindMemberMinistry {
   }
 }
 
-export const FIND_MEMBER_MINISTRY = new InjectionToken('FIND_MEMBER_MINISTRY');
+export const FIND_MEMBER_OCCUPATION = new InjectionToken('FIND_MEMBER_OCCUPATION');
 
 Container.provide([{
-  provide: FIND_MEMBER_MINISTRY,
-  useClass: FindMemberMinistry
+  provide: FIND_MEMBER_OCCUPATION,
+  useClass: FindMemberOccupation
 }]);

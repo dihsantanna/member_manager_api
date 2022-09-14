@@ -147,6 +147,22 @@ export class MemberRepositoryInMemory implements IMemberRepository {
       })));
   }
 
+  async findMemberOccupation (id: number): Promise<Occupation[] | null> {
+    const member = await this.findById(id);
+
+    if (!member) {
+      return null;
+    }
+
+    return this.memberOccupation
+      .filter(({ memberId }) => (memberId === id))
+      .map(({ occupationId }) => (new Occupation({
+        id: occupationId,
+        name: this.occupations
+          .find(occupation => (occupation.id === occupationId))?.name as string
+      })));
+  }
+
   async update (id: number, data: UpdateData): Promise<Member> {
     this.members = this.members.map(member => (
       member.id === id ? new Member({ ...member, ...data }) : member
