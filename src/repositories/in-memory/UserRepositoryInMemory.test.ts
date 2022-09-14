@@ -48,4 +48,28 @@ describe('Testando classe UserRepositoryInMemory', () => {
       expect(userFound).toBeNull();
     });
   });
+
+  describe('Método findById', () => {
+    it('Deve ser possível encontrar um usuário pelo id, e NÃO deve possuir a chave "password"', async () => {
+      const userRepository = new UserRepositoryInMemory();
+      const user = new User(createUserProps);
+
+      const createdUser = await userRepository.create(user);
+      const userFound = await userRepository.findById(createdUser.id as number);
+
+      expect(userFound).not.toBeNull();
+      expect(userFound).toBeInstanceOf(User);
+      expect(userFound).to.have.keys(
+        ['id', 'fullName', 'email', 'roleName']
+      );
+      expect(userFound).not.toHaveProperty('password');
+    });
+
+    it('Deve retornar null caso não encontre um usuário pelo id', async () => {
+      const userRepository = new UserRepositoryInMemory();
+      const userFound = await userRepository.findById(1);
+
+      expect(userFound).toBeNull();
+    });
+  });
 });

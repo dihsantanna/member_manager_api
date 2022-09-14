@@ -38,4 +38,16 @@ export class UserRepositoryInMemory implements IUserRepository {
 
     return new User({ id, fullName, email, password, roleName });
   }
+
+  async findById (id: number): Promise<User | null> {
+    const user = this.users.find(user => user.id === id);
+
+    if (!user) return null;
+
+    const { email, roleName } = user;
+
+    const fullName = this.members.find(member => member.email === email)?.fullName;
+
+    return new User({ id, fullName, email, roleName });
+  }
 }
