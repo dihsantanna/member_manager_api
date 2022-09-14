@@ -27,7 +27,7 @@ describe('Testando classe UserRepositoryInMemory', () => {
   });
 
   describe('Método findByEmail', () => {
-    it('Deve ser possível encontrar um usuário pelo email', async () => {
+    it('Deve ser possível encontrar um usuário pelo email, e deve possuir a chave "password"', async () => {
       const userRepository = new UserRepositoryInMemory();
       const user = new User(createUserProps);
 
@@ -36,6 +36,9 @@ describe('Testando classe UserRepositoryInMemory', () => {
 
       expect(userFound).not.toBeNull();
       expect(userFound).toBeInstanceOf(User);
+      expect(userFound).to.have.keys(
+        ['id', 'fullName', 'email', 'password', 'roleName']
+      );
     });
 
     it('Deve retornar null caso não encontre um usuário pelo email', async () => {

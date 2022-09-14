@@ -16,7 +16,7 @@ export class UserRepositoryInMemory implements IUserRepository {
       ...user,
       id: this.nextId
     });
-    this.users.push(user);
+    this.users.push(newUser);
 
     this.nextId++;
 
@@ -29,12 +29,13 @@ export class UserRepositoryInMemory implements IUserRepository {
 
   async findByEmail (email: string): Promise<User | null> {
     const user = this.users.find(user => user.email === email);
+
     if (!user) return null;
 
-    const { id, roleName } = user;
+    const { id, roleName, password } = user;
 
     const fullName = this.members.find(member => member.email === email)?.fullName;
 
-    return new User({ id, fullName, email, roleName });
+    return new User({ id, fullName, email, password, roleName });
   }
 }
