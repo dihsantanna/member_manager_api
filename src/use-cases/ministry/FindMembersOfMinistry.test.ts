@@ -46,4 +46,20 @@ describe('Testando classe FindMembersOfMinistry', () => {
       expect((error as CustomError).statusCode).toBe(status.BAD_REQUEST);
     }
   });
+
+  it('Deve retornar um array vazio caso o ministério não tenha membros', async () => {
+    const ministryRepository = new MinistryRepositoryInMemory();
+    const findMembersOfMinistry = new FindMembersOfMinistry(ministryRepository);
+
+    const createMinistry = new CreateMinistry(ministryRepository);
+
+    await createMinistry.execute({ name });
+
+    const ministry = await createMinistry.execute({ name: 'Ministério 2' });
+
+    const members = await findMembersOfMinistry.execute(ministry.id as number);
+
+    expect(members).toBeInstanceOf(Array);
+    expect(members).toHaveLength(0);
+  });
 });

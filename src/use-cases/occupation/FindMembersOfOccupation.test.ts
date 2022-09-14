@@ -46,4 +46,20 @@ describe('Testando classe FindMembersOfOccupation', () => {
       expect((error as CustomError).statusCode).toBe(status.BAD_REQUEST);
     }
   });
+
+  it('Deve retornar um array vazio caso o cargo não tenha membros', async () => {
+    const occupationRepository = new OccupationRepositoryInMemory();
+    const findMembersOfOccupation = new FindMembersOfOccupation(occupationRepository);
+
+    const createOccupation = new CreateOccupation(occupationRepository);
+
+    await createOccupation.execute({ name });
+
+    const occupation = await createOccupation.execute({ name: 'Cargo 2' });
+
+    const members = await findMembersOfOccupation.execute(occupation.id as number);
+
+    expect(members).toBeInstanceOf(Array);
+    expect(members).toHaveLength(0);
+  });
 });

@@ -45,4 +45,19 @@ describe('Testando classe UpdateMemberInMinistry', () => {
       expect((error as CustomError).statusCode).toBe(status.BAD_REQUEST);
     }
   });
+
+  it('Deve retornar um array caso membro seja removido de todos os ministérios', async () => {
+    const memberRepository = new MemberRepositoryInMemory();
+    const updateMemberInMinistry = new UpdateMemberInMinistry(memberRepository);
+
+    const member = new Member(createMemberProps);
+
+    const createMember = new CreateMember(memberRepository);
+    const memberCreated = await createMember.execute(member);
+
+    const memberMinistries = await updateMemberInMinistry.execute({ id: memberCreated.id as number, data: [] });
+
+    expect(memberMinistries).toBeInstanceOf(Array);
+    expect(memberMinistries).toHaveLength(0);
+  });
 });

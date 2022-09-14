@@ -43,4 +43,19 @@ describe('Testando classe FindMemberOccupation', () => {
       expect((error as CustomError).statusCode).toBe(status.BAD_REQUEST);
     }
   });
+
+  it('Deve retornar um array vazio caso o membro não esteja em nenhum cargo.', async () => {
+    const memberRepository = new MemberRepositoryInMemory();
+
+    const createMember = new CreateMember(memberRepository);
+    const member = await createMember.execute(createMemberProps);
+
+    memberRepository.memberOccupation = [];
+
+    const findMemberOccupation = new FindMemberOccupation(memberRepository);
+    const occupations = await findMemberOccupation.execute(member.id as number);
+
+    expect(occupations).toBeInstanceOf(Array);
+    expect(occupations).toHaveLength(0);
+  });
 });

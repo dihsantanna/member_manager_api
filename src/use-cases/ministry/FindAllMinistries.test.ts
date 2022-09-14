@@ -27,4 +27,14 @@ describe('Testando classe FindAllMinistries', () => {
     expect(ministries.length).toBe(ministryRepository.ministries.length);
     expect(ministries[0]).toBeInstanceOf(MinistryWithMembersQty);
   });
+
+  it('Deve retornar um array vazio caso não haja ministérios cadastrados.', async () => {
+    const ministryRepository = new MinistryRepositoryInMemory();
+    const findAllMinistries = new FindAllMinistries(ministryRepository);
+
+    const ministries = await findAllMinistries.execute();
+
+    expect(ministries).toBeInstanceOf(Array);
+    expect(ministries).toHaveLength(0);
+  });
 });

@@ -26,4 +26,14 @@ describe('Testando classe FindAllMembers', () => {
     expect(members).toBeInstanceOf(Array);
     expect(members[0]).toBeInstanceOf(Member);
   });
+
+  it('Deve retornar um array vazio caso não haja membros cadastrados', async () => {
+    const memberRepository = new MemberRepositoryInMemory();
+
+    const findAllMembers = new FindAllMembers(memberRepository);
+    const members = await findAllMembers.execute();
+
+    expect(members).toBeInstanceOf(Array);
+    expect(members).toHaveLength(0);
+  });
 });

@@ -43,4 +43,19 @@ describe('Testando classe FindMemberMinistry', () => {
       expect((error as CustomError).statusCode).toBe(status.BAD_REQUEST);
     }
   });
+
+  it('Deve retornar um array vazio caso o membro não esteja em nenhum ministério.', async () => {
+    const memberRepository = new MemberRepositoryInMemory();
+
+    const createMember = new CreateMember(memberRepository);
+    const member = await createMember.execute(createMemberProps);
+
+    memberRepository.memberMinistry = [];
+
+    const findMemberMinistry = new FindMemberMinistry(memberRepository);
+    const ministries = await findMemberMinistry.execute(member.id as number);
+
+    expect(ministries).toBeInstanceOf(Array);
+    expect(ministries).toHaveLength(0);
+  });
 });

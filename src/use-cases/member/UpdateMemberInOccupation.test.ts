@@ -45,4 +45,19 @@ describe('Testando classe UpdateMemberInOccupation', () => {
       expect((error as CustomError).statusCode).toBe(status.BAD_REQUEST);
     }
   });
+
+  it('Deve retornar um array caso membro seja removido de todos os cargos', async () => {
+    const memberRepository = new MemberRepositoryInMemory();
+    const updateMemberInOccupation = new UpdateMemberInOccupation(memberRepository);
+
+    const member = new Member(createMemberProps);
+
+    const createMember = new CreateMember(memberRepository);
+    const memberCreated = await createMember.execute(member);
+
+    const memberOccupations = await updateMemberInOccupation.execute({ id: memberCreated.id as number, data: [] });
+
+    expect(memberOccupations).toBeInstanceOf(Array);
+    expect(memberOccupations).toHaveLength(0);
+  });
 });

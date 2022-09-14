@@ -26,4 +26,14 @@ describe('Testando classe FindAllOccupations', () => {
     expect(occupations.length).toBe(occupationRepository.occupations.length);
     expect(occupations[0]).toBeInstanceOf(Occupation);
   });
+
+  it('Deve retornar um array vazio caso não haja cargos cadastrados.', async () => {
+    const occupationRepository = new OccupationRepositoryInMemory();
+    const findAllOccupations = new FindAllOccupations(occupationRepository);
+
+    const occupations = await findAllOccupations.execute();
+
+    expect(occupations).toBeInstanceOf(Array);
+    expect(occupations).toHaveLength(0);
+  });
 });
