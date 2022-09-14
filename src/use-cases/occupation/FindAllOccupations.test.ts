@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { Occupation } from '../../entities';
-import { OccupationRepositoryInMemory } from '../../repositories/inMemory';
+import { OccupationRepositoryInMemory } from '../../repositories/in-memory';
 import { occupationProps } from '../../tests/utils';
 import { FindAllOccupations } from './FindAllOccupations';
 

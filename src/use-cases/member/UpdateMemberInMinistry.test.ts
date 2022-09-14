@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { Member, Ministry } from '../../entities';
 import { CustomError } from '../../helpers';
-import { MemberRepositoryInMemory } from '../../repositories/inMemory';
+import { MemberRepositoryInMemory } from '../../repositories/in-memory';
 import { createMemberProps } from '../../tests/utils';
 import { CreateMember } from './CreateMember';
 import { UpdateMemberInMinistry } from './UpdateMemberInMinistry';

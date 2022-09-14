@@ -2,7 +2,7 @@ import { StatusCodes as status } from 'http-status-codes';
 import { describe, expect, it } from 'vitest';
 import { Ministry } from '../../entities';
 import { CustomError } from '../../helpers';
-import { MinistryRepositoryInMemory } from '../../repositories/inMemory';
+import { MinistryRepositoryInMemory } from '../../repositories/in-memory';
 import { ministryProps } from '../../tests/utils';
 
 import { DeleteMinistry } from './DeleteMinistry';

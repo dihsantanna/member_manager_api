@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { Ministry } from '../../entities';
 import { MinistryWithMembersQty } from '../../repositories';
-import { MinistryRepositoryInMemory } from '../../repositories/inMemory';
+import { MinistryRepositoryInMemory } from '../../repositories/in-memory';
 import { ministryProps } from '../../tests/utils';
 import { FindAllMinistries } from './FindAllMinistries';
 

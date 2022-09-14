@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { Occupation } from '../../entities';
 import { CustomError } from '../../helpers';
-import { OccupationRepositoryInMemory } from '../../repositories/inMemory';
+import { OccupationRepositoryInMemory } from '../../repositories/in-memory';
 import { occupationProps } from '../../tests/utils';
 import { UpdateOccupation } from './UpdateOccupation';
 

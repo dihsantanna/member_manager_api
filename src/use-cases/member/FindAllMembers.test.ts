@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Member } from '../../entities';
-import { MemberRepositoryInMemory } from '../../repositories/inMemory';
+import { MemberRepositoryInMemory } from '../../repositories/in-memory';
 import { createMemberProps } from '../../tests/utils';
 import { CreateMember } from './CreateMember';
 
