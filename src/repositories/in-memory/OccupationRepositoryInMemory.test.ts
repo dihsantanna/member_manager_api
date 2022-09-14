@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Occupation } from '../../entities';
+import { Member, Occupation } from '../../entities';
 import { occupationProps } from '../../tests/utils';
 import { OccupationRepositoryInMemory } from './OccupationRepositoryInMemory';
 
@@ -68,6 +68,43 @@ describe('Testando OccupationRepositoryInMemory', () => {
       const occupationFound = await occupationRepositoryInMemory.findByName('name');
 
       expect(occupationFound).toBeNull();
+    });
+  });
+
+  describe('Método findMembersOfOccupation', () => {
+    it('Deve ser possível encontrar os membros de um cargo e retorna um array de Member', async () => {
+      const occupationRepositoryInMemory = new OccupationRepositoryInMemory();
+      const occupation = new Occupation({ name });
+      const createOccupation = await occupationRepositoryInMemory.create(occupation);
+
+      const members = await occupationRepositoryInMemory.findMembersOfOccupation(
+        createOccupation.id as number
+      );
+
+      expect(members).toBeInstanceOf(Array);
+      expect((members as unknown as Member[])[0]).toBeInstanceOf(Member);
+    });
+
+    it('Deve retornar null caso o cargo não exista', async () => {
+      const occupationRepositoryInMemory = new OccupationRepositoryInMemory();
+
+      const members = await occupationRepositoryInMemory.findMembersOfOccupation(1);
+
+      expect(members).toBeNull();
+    });
+
+    it('Deve retornar um array vazio caso o cargo não tenha membros', async () => {
+      const occupationRepositoryInMemory = new OccupationRepositoryInMemory();
+      const occupation = new Occupation({ name });
+      await occupationRepositoryInMemory.create(occupation);
+
+      const createOccupation = await occupationRepositoryInMemory.create(occupation);
+
+      const members = await occupationRepositoryInMemory.findMembersOfOccupation(
+        createOccupation.id as number
+      );
+
+      expect(members).toHaveLength(0);
     });
   });
 

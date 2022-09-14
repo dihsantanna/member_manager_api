@@ -1,7 +1,12 @@
 import { IOccupationRepository } from '..';
-import { Occupation, OccupationProps } from '../../entities';
+import { Member, Occupation, OccupationProps } from '../../entities';
+import { memberProps } from '../../tests/utils';
 
 export class OccupationRepositoryInMemory implements IOccupationRepository {
+  members: Member[] = [
+    new Member(memberProps)
+  ];
+
   occupations: Occupation[] = [];
   nextId = 1;
 
@@ -31,6 +36,17 @@ export class OccupationRepositoryInMemory implements IOccupationRepository {
   async findByName (name: string): Promise<Occupation | null> {
     const occupation = this.occupations.find(occupation => occupation.name === name);
     return occupation || null;
+  }
+
+  async findMembersOfOccupation (occupationId: number): Promise<Member[] | null> {
+    const occupation = await this.findById(occupationId);
+
+    if (!occupation) return null;
+
+    const members = this.members.filter(member => (
+      member.ministries as unknown as Occupation[])[0].id === occupationId);
+
+    return members;
   }
 
   async update (id: number, { name }: OccupationProps): Promise<Occupation | null> {
