@@ -1,6 +1,6 @@
 import { Person } from '../../entities';
 import { User } from '../../entities/User';
-import { IUserRepository } from '../UserRepository';
+import { IUserRepository, UpdateUserData } from '../UserRepository';
 
 interface MemberInMemory extends Person {
   email: string
@@ -60,5 +60,31 @@ export class UserRepositoryInMemory implements IUserRepository {
         roleName
       })
     ));
+  }
+
+  async update (id: number, data: UpdateUserData): Promise<User> {
+    const user = this.users.find(user => user.id === id) as User;
+
+    if (data.email) {
+      this.members = this.members.map(member => (
+        member.email === data.email
+          ? { ...member, email: data.email }
+          : member
+      ));
+    }
+
+    const updatedUser = new User({
+      ...user,
+      email: data.email || user.email,
+      roleName: data.roleName || user.roleName
+    });
+
+    this.users = this.users.map(user => user.id === id ? updatedUser : user);
+
+    const { email, roleName } = updatedUser;
+
+    const fullName = this.members.find(member => member.email === email)?.fullName;
+
+    return new User({ id, fullName, email, roleName });
   }
 }

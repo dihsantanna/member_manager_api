@@ -96,4 +96,27 @@ describe('Testando classe UserRepositoryInMemory', () => {
       expect(users).toHaveLength(0);
     });
   });
+
+  describe('Método update', () => {
+    const newEmail = 'john@doe.com';
+    const newRoleName = 'PRESIDENT';
+
+    it('Deve ser possível atualizar um usuário, e retornar um User', async () => {
+      const userRepository = new UserRepositoryInMemory();
+      const user = new User(createUserProps);
+
+      const createdUser = await userRepository.create(user);
+      const userUpdated = await userRepository.update(createdUser.id as number, {
+        email: newEmail,
+        roleName: newRoleName
+      });
+
+      expect(userUpdated).toBeInstanceOf(User);
+      expect(userUpdated.email).toBe(newEmail);
+      expect(userUpdated.roleName).toBe(newRoleName);
+      expect(userRepository.users).toHaveLength(1);
+      expect(userRepository.users[0].email).toBe(newEmail);
+      expect(userRepository.users[0].roleName).toBe(newRoleName);
+    });
+  });
 });
