@@ -1,7 +1,12 @@
 import { IMinistryRepository, MinistryWithMembersQty } from '..';
-import { Ministry, MinistryProps } from '../../entities';
+import { Member, Ministry, MinistryProps } from '../../entities';
+import { memberProps } from '../../tests/utils';
 
 export class MinistryRepositoryInMemory implements IMinistryRepository {
+  members: Member[] = [
+    new Member(memberProps)
+  ];
+
   ministries: Ministry[] = [];
   nextId = 1;
 
@@ -31,6 +36,17 @@ export class MinistryRepositoryInMemory implements IMinistryRepository {
   async findByName (name: string): Promise<Ministry | null> {
     const ministry = this.ministries.find(ministry => ministry.name === name);
     return ministry || null;
+  }
+
+  async findMembersOfMinistry (ministryId: number): Promise<Member[] | null> {
+    const ministry = await this.findById(ministryId);
+
+    if (!ministry) return null;
+
+    const members = this.members.filter(member => (
+      member.ministries as unknown as Ministry[])[0].id === ministryId);
+
+    return members;
   }
 
   async update (id: number, { name }: MinistryProps): Promise<Ministry | null> {
