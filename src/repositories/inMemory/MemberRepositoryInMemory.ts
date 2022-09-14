@@ -204,6 +204,39 @@ export class MemberRepositoryInMemory implements IMemberRepository {
       )) as Ministry[];
   }
 
+  async updateMemberInOccupation (id: number, data: number[]): Promise<Occupation[] | null> {
+    const member = this.members.find(member => member.id === id);
+
+    if (!member) {
+      return null;
+    }
+
+    const occupations = this.memberOccupation.filter(({ memberId }) => (memberId === id))
+      .map(({ occupationId }) => occupationId);
+
+    const memberOccupationDeleted = occupations.filter(occupationId => !data.includes(occupationId));
+    const memberOccupationAdded = data.filter(occupationId => !occupations.includes(occupationId))
+      .map(occupationId => ({ occupationId, memberId: id }));
+
+    if (memberOccupationDeleted.length) {
+      this.memberOccupation = this.memberOccupation.filter(({ memberId, occupationId }) => (
+        !(memberId === id && memberOccupationDeleted.includes(occupationId))
+      ));
+    }
+
+    if (memberOccupationAdded.length) {
+      this.memberOccupation = [
+        ...this.memberOccupation,
+        ...memberOccupationAdded
+      ];
+    }
+
+    return this.memberOccupation.filter(({ memberId }) => (memberId === id))
+      .map(({ occupationId }) => (
+        this.occupations.find(occupation => (occupation.id === occupationId))
+      )) as Occupation[];
+  }
+
   async delete (id: number): Promise<Member> {
     const member = this.members.find(member => member.id === id) as Member;
     this.memberMinistry = this.memberMinistry.filter(({ memberId }) => (memberId !== id));

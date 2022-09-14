@@ -132,6 +132,28 @@ describe('Testando MemberRepositoryInMemory', () => {
     expect(memberMinistryUpdated).toBeNull();
   });
 
+  it('Deve ser possível atualizar os cargos de um membro, e retornar um array de Occupation.', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+    const member = new Member(createMemberProps);
+
+    const memberCreated = await memberRepositoryInMemory.create(member);
+    const memberOccupationUpdated = await memberRepositoryInMemory.updateMemberInOccupation(memberCreated.id as number, [1]);
+
+    expect(memberOccupationUpdated).toBeInstanceOf(Array);
+    expect((memberOccupationUpdated as Occupation[])[0]).toBeInstanceOf(Occupation);
+    expect(memberCreated.occupations).toHaveLength(2);
+    expect((memberOccupationUpdated as Occupation[])[0].id).toBe(1);
+    expect(memberOccupationUpdated).toHaveLength(1);
+  });
+
+  it('Deve retornar nulo caso membro não exista', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+
+    const memberMinistryUpdated = await memberRepositoryInMemory.updateMemberInOccupation(1, [1]);
+
+    expect(memberMinistryUpdated).toBeNull();
+  });
+
   it('Deve ser possível deletar um membro.', async () => {
     const memberRepositoryInMemory = new MemberRepositoryInMemory();
     const member = new Member(createMemberProps);

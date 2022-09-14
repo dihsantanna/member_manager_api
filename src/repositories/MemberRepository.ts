@@ -10,5 +10,6 @@ export interface IMemberRepository {
   findMemberOccupation: (id: number) => Promise<Occupation[] | null>
   update: (id: number, data: UpdateData) => Promise<Member>
   updateMemberInMinistry: (id: number, data: number[]) => Promise<Ministry[] | null>
+  updateMemberInOccupation: (id: number, data: number[]) => Promise<Occupation[] | null>
   delete: (id: number) => Promise<Member>
 }
