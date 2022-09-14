@@ -110,6 +110,28 @@ describe('Testando MemberRepositoryInMemory', () => {
     expect(memberUpdated.city).toBe('Cidade dos Testes');
   });
 
+  it('Deve ser possível atualizar os ministérios de um membro, e retornar um array de Ministry.', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+    const member = new Member(createMemberProps);
+
+    const memberCreated = await memberRepositoryInMemory.create(member);
+    const memberMinistryUpdated = await memberRepositoryInMemory.updateMemberInMinistry(memberCreated.id as number, [1]);
+
+    expect(memberMinistryUpdated).toBeInstanceOf(Array);
+    expect((memberMinistryUpdated as Ministry[])[0]).toBeInstanceOf(Ministry);
+    expect(memberCreated.ministries).toHaveLength(2);
+    expect((memberMinistryUpdated as Ministry[])[0].id).toBe(1);
+    expect(memberMinistryUpdated).toHaveLength(1);
+  });
+
+  it('Deve retornar nulo caso membro não exista', async () => {
+    const memberRepositoryInMemory = new MemberRepositoryInMemory();
+
+    const memberMinistryUpdated = await memberRepositoryInMemory.updateMemberInMinistry(1, [1]);
+
+    expect(memberMinistryUpdated).toBeNull();
+  });
+
   it('Deve ser possível deletar um membro.', async () => {
     const memberRepositoryInMemory = new MemberRepositoryInMemory();
     const member = new Member(createMemberProps);

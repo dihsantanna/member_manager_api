@@ -171,8 +171,43 @@ export class MemberRepositoryInMemory implements IMemberRepository {
     return Promise.resolve(this.members.find(member => member.id === id) as Member);
   }
 
+  async updateMemberInMinistry (id: number, data: number[]): Promise<Ministry[] | null> {
+    const member = this.members.find(member => member.id === id);
+
+    if (!member) {
+      return null;
+    }
+
+    const ministries = this.memberMinistry.filter(({ memberId }) => (memberId === id))
+      .map(({ ministryId }) => ministryId);
+
+    const memberMinistryDeleted = ministries.filter(ministryId => !data.includes(ministryId));
+    const memberMinistryAdded = data.filter(ministryId => !ministries.includes(ministryId))
+      .map(ministryId => ({ ministryId, memberId: id }));
+
+    if (memberMinistryDeleted.length) {
+      this.memberMinistry = this.memberMinistry.filter(({ memberId, ministryId }) => (
+        !(memberId === id && memberMinistryDeleted.includes(ministryId))
+      ));
+    }
+
+    if (memberMinistryAdded.length) {
+      this.memberMinistry = [
+        ...this.memberMinistry,
+        ...memberMinistryAdded
+      ];
+    }
+
+    return this.memberMinistry.filter(({ memberId }) => (memberId === id))
+      .map(({ ministryId }) => (
+        this.ministries.find(ministry => (ministry.id === ministryId))
+      )) as Ministry[];
+  }
+
   async delete (id: number): Promise<Member> {
     const member = this.members.find(member => member.id === id) as Member;
+    this.memberMinistry = this.memberMinistry.filter(({ memberId }) => (memberId !== id));
+    this.memberOccupation = this.memberOccupation.filter(({ memberId }) => (memberId !== id));
     this.members = this.members.filter(member => member.id !== id);
     return member;
   }
