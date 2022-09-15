@@ -4,7 +4,12 @@ export default defineConfig({
   test: {
     coverage: {
       provider: 'c8',
-      exclude: ['**/node_modules/**', '**/dist/**', '**/src/**/index.ts'],
+      exclude: [
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/src/**/index.ts',
+        '**/src/**/*.test.ts'
+      ],
     }
   }
 })
