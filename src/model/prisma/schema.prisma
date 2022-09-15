@@ -1,0 +1,172 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model Member {
+  id             Int                @id @default(autoincrement())
+  fullName       String             @db.VarChar(80)
+  birthDate      String             @db.VarChar(10)
+  nationality    String             @db.VarChar(100)
+  fatherName     String             @db.VarChar(80)
+  motherName     String             @db.VarChar(80)
+  civilStatus    String             @db.VarChar(50)
+  rg             String?            @db.VarChar(10)
+  rgEmissionDate String?            @db.VarChar(10)
+  rgExpediter    String?            @db.VarChar(50)
+  cpf            String?            @db.VarChar(11)
+  email          String?            @unique @db.VarChar(50)
+  phone          String?            @db.VarChar(20)
+  mobilePhone    String?            @db.VarChar(20)
+  street         String             @db.VarChar(50)
+  number         Int?               @db.Integer
+  complement     String?            @db.VarChar(50)
+  district       String             @db.VarChar(50)
+  city           String             @db.VarChar(50)
+  state          State              @default(RJ)
+  profession     String?            @db.VarChar(50)
+  congregated    Boolean            @default(false)
+  occupations    MemberOccupation[]
+  ministries     MemberMinistry[]
+  user           User?
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique @db.VarChar(50)
+  password String   @db.VarChar(60)
+  roleName RoleName @default(MEMBER)
+  member   Member   @relation(fields: [email], references: [email])
+  role     Role     @relation(fields: [roleName], references: [name])
+}
+
+model Occupation {
+  id      Int                @id @default(autoincrement())
+  name    String             @unique @db.VarChar(100)
+  members MemberOccupation[]
+}
+
+model MemberMinistry {
+  memberId   Int
+  ministryId Int
+  member     Member   @relation(fields: [memberId], references: [id])
+  ministry   Ministry @relation(fields: [ministryId], references: [id])
+
+  @@id([memberId, ministryId])
+}
+
+model MemberOccupation {
+  memberId     Int
+  occupationId Int
+  member       Member     @relation(fields: [memberId], references: [id])
+  occupation   Occupation @relation(fields: [occupationId], references: [id])
+
+  @@id([memberId, occupationId])
+}
+
+model Ministry {
+  id      Int              @id @default(autoincrement())
+  name    String           @unique @db.VarChar(100)
+  members MemberMinistry[]
+}
+
+model Role {
+  id        Int         @id @default(autoincrement())
+  name      RoleName    @unique
+  roleScope RoleScope[]
+  user      User[]
+}
+
+model Scope {
+  id        Int         @id @default(autoincrement())
+  name      ScopeName   @unique
+  roleScope RoleScope[]
+}
+
+model RoleScope {
+  roleId  Int
+  scopeId Int
+  role    Role  @relation(fields: [roleId], references: [id])
+  scope   Scope @relation(fields: [scopeId], references: [id])
+
+  @@id([roleId, scopeId])
+}
+
+enum RoleName {
+  ADMIN
+  PRESIDENT
+  SECRETARY
+  TREASURER
+  PROGRAM_DIRECTOR
+  MEMBER
+}
+
+enum ScopeName {
+  CREATE_ADMIN_USER
+  UPDATE_ADMIN_USER
+  DELETE_ADMIN_USER
+  CREATE_PRESIDENT_USER
+  UPDATE_PRESIDENT_USER
+  DELETE_PRESIDENT_USER
+  CREATE_SECRETARY_USER
+  UPDATE_SECRETARY_USER
+  DELETE_SECRETARY_USER
+  CREATE_TREASURER_USER
+  UPDATE_TREASURER_USER
+  DELETE_TREASURER_USER
+  CREATE_USER
+  UPDATE_USER
+  DELETE_USER
+  SEE_ALL_USERS
+  CREATE_MEMBER
+  UPDATE_MEMBER
+  DELETE_MEMBER
+  SEE_ALL_MEMBERS
+  CREATE_MINISTRY
+  UPDATE_MINISTRY
+  DELETE_MINISTRY
+  CREATE_OCCUPATION
+  UPDATE_OCCUPATION
+  DELETE_OCCUPATION
+  ADD_MEMBER_TO_MINISTRY
+  REMOVE_MEMBER_FROM_MINISTRY
+  ADD_MEMBER_TO_OCCUPATION
+  REMOVE_MEMBER_FROM_OCCUPATION
+}
+
+enum State {
+  AC
+  AL
+  AP
+  AM
+  BA
+  CE
+  DF
+  ES
+  GO
+  MA
+  MT
+  MS
+  MG
+  PA
+  PB
+  PR
+  PE
+  PI
+  RJ
+  RN
+  RS
+  RO
+  RR
+  SC
+  SP
+  SE
+  TO
+}
