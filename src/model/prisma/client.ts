@@ -3,9 +3,9 @@ import { PrismaClient } from '@prisma/client';
 
 export const prisma = new PrismaClient();
 
-export const PRISMA_CLIENTE = new InjectionToken('PRISMA_MODEL');
+export const PRISMA_CLIENT = new InjectionToken('PRISMA_CLIENT');
 
 Container.provide([{
-  provide: PRISMA_CLIENTE,
+  provide: PRISMA_CLIENT,
   useValue: prisma
 }]);
