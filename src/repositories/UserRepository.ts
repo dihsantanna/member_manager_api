@@ -8,4 +8,5 @@ export interface IUserRepository {
   findById: (id: number) => Promise<User | null>
   findAll: () => Promise<User[]>
   update: (id: number, data: UpdateUserData) => Promise<User>
+  updatePassword: (id: number, password: string) => Promise<void>
 }

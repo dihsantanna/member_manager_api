@@ -87,4 +87,11 @@ export class UserRepositoryInMemory implements IUserRepository {
 
     return new User({ id, fullName, email, roleName });
   }
+
+  async updatePassword (id: number, password: string): Promise<void> {
+    this.users = this.users.map(user => (
+      user.id === id
+        ? new User({ ...user, password })
+        : user));
+  }
 }

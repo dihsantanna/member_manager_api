@@ -119,4 +119,22 @@ describe('Testando classe UserRepositoryInMemory', () => {
       expect(userRepository.users[0].roleName).toBe(newRoleName);
     });
   });
+
+  describe('Método updatePassword', () => {
+    const newPassword = 'outro_password';
+    it('Deve ser possível atualizar a senha de um usuário, metodo não deve ter retorno', async () => {
+      const userRepository = new UserRepositoryInMemory();
+      const user = new User(createUserProps);
+
+      const createdUser = await userRepository.create(user);
+      const userUpdated = await userRepository.updatePassword(
+        createdUser.id as number,
+        newPassword
+      );
+
+      expect(userUpdated).toBeUndefined();
+      expect(userRepository.users).toHaveLength(1);
+      expect(userRepository.users[0].password).toBe(newPassword);
+    });
+  });
 });
