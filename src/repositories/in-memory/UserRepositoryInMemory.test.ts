@@ -137,4 +137,20 @@ describe('Testando classe UserRepositoryInMemory', () => {
       expect(userRepository.users[0].password).toBe(newPassword);
     });
   });
+
+  describe('Método delete', () => {
+    it('Deve ser possível deletar um usuário, metodo não deve ter retorno', async () => {
+      const userRepository = new UserRepositoryInMemory();
+      const user = new User(createUserProps);
+
+      const createdUser = await userRepository.create(user);
+
+      expect(userRepository.users).toHaveLength(1);
+
+      const userDeleted = await userRepository.delete(createdUser.id as number);
+
+      expect(userDeleted).toBeUndefined();
+      expect(userRepository.users).toHaveLength(0);
+    });
+  });
 });

@@ -94,4 +94,8 @@ export class UserRepositoryInMemory implements IUserRepository {
         ? new User({ ...user, password })
         : user));
   }
+
+  async delete (id: number): Promise<void> {
+    this.users = this.users.filter(user => user.id !== id);
+  }
 }
