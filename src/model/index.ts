@@ -1,10 +1,15 @@
-import { prisma, PRISMA_CLIENT } from './prisma/client';
-import { Context, createMockContext, MockContext } from './prisma/context';
+import {
+  createMockModel,
+  MockModel,
+  Model,
+  MODEL,
+  model
+} from './prisma/context';
 
 export {
-  prisma,
-  PRISMA_CLIENT,
-  Context,
-  MockContext,
-  createMockContext
+  model,
+  MODEL,
+  createMockModel,
+  MockModel,
+  Model
 };

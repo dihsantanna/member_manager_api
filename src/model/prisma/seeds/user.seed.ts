@@ -1,6 +1,6 @@
 import { RoleName } from '@prisma/client';
 import logger from 'node-color-log';
-import { prisma } from '../client';
+import { prisma } from './seed';
 
 export async function userSeed () {
   logger.color('yellow').log('Criando seed de User...');

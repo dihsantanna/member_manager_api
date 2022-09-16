@@ -12,3 +12,9 @@ export class Ministry implements MinistryProps {
     this.name = props.name;
   }
 }
+
+export class MinistryWithMembersQty extends Ministry {
+  constructor (ministry: MinistryProps, readonly membersQty: number) {
+    super(ministry);
+  }
+}

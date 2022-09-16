@@ -18,7 +18,7 @@ CREATE TABLE "Member" (
     "civilStatus" VARCHAR(50) NOT NULL,
     "rg" VARCHAR(10),
     "rgEmissionDate" VARCHAR(10),
-    "rgExpediter" VARCHAR(50),
+    "rgDispatcher" VARCHAR(50),
     "cpf" VARCHAR(11),
     "email" VARCHAR(50),
     "phone" VARCHAR(20),

@@ -1,5 +1,5 @@
 import logger from 'node-color-log';
-import { prisma } from '../client';
+import { prisma } from './seed';
 
 export async function memberSeed () {
   logger.color('yellow').log('Criando seed de Member...');

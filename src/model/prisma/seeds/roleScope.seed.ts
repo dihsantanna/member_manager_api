@@ -1,6 +1,6 @@
 import { ScopeName } from '@prisma/client';
 import logger from 'node-color-log';
-import { prisma } from '../client';
+import { prisma } from './seed';
 
 export async function roleScopeSeed () {
   const scopesNames: ScopeName[] = [

@@ -1,5 +1,5 @@
-import { IMinistryRepository, MinistryWithMembersQty } from '..';
-import { Member, Ministry, MinistryProps } from '../../entities';
+import { IMinistryRepository } from '..';
+import { Member, Ministry, MinistryProps, MinistryWithMembersQty } from '../../entities';
 import { memberProps } from '../../tests/utils';
 
 export class MinistryRepositoryInMemory implements IMinistryRepository {

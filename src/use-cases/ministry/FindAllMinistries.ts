@@ -1,5 +1,6 @@
 import { Container, Injectable, InjectionToken } from '@decorators/di';
-import { IMinistryRepository, MinistryWithMembersQty } from '../../repositories';
+import { MinistryWithMembersQty } from '../../entities';
+import { IMinistryRepository } from '../../repositories';
 
 type FindAllMinistriesResponse = MinistryWithMembersQty[];
 

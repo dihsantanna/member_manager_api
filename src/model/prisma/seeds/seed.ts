@@ -1,4 +1,4 @@
-import { prisma } from '../client';
+import { PrismaClient } from '@prisma/client';
 import { memberSeed } from './member.seed';
 import { ministrySeed } from './ministry.seed';
 import { occupationSeed } from './occupation.seed';
@@ -6,6 +6,8 @@ import { roleSeed } from './role.seed';
 import { roleScopeSeed } from './roleScope.seed';
 import { scopeSeed } from './scope.seed';
 import { userSeed } from './user.seed';
+
+export const prisma = new PrismaClient();
 
 async function main () {
   // adicione seus seeds aqui

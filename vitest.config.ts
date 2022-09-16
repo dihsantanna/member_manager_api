@@ -10,6 +10,7 @@ export default defineConfig({
         '**/src/**/index.ts',
         '**/src/**/*.test.ts'
       ],
-    }
+    },
+    mockReset: true,
   }
 })

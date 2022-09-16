@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Ministry } from '../../entities';
-import { MinistryWithMembersQty } from '../../repositories';
+import { Ministry, MinistryWithMembersQty } from '../../entities';
 import { MinistryRepositoryInMemory } from '../../repositories/in-memory';
 import { ministryProps } from '../../tests/utils';
 import { FindAllMinistries } from './FindAllMinistries';
